@@ -9,9 +9,9 @@ struct Node { // we use struct here because POD ("plain old data")
     Node* parent;
     Node* left;
     Node* right;
-  Node (const string& key) 
+  Node (const string& value) 
     :
-    data(key),
+    data(value),
     parent(nullptr),
     left(nullptr),
     right(nullptr)

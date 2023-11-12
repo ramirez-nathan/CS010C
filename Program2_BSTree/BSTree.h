@@ -119,10 +119,11 @@ class BSTree {
 
     /* private destructor helper function */
     void Destructor(Node* root);
+    BSTree & operator=(const BSTree &) = delete;
+    BSTree(const BSTree &copy) = delete;
     
     
     
-
 
 
 };

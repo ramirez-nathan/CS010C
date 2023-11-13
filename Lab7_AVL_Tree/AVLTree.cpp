@@ -46,7 +46,7 @@ void AVLTree::insert(const string &newString) {
             curr = curr->right;
         }
     }
-    while (curr != nullptr) {
+    while (curr != nullptr) { // iterate up the tree from insert location and look for imbalances in the tree
         if (balanceFactor(curr) > 1 || balanceFactor(curr) < -1) {
             rotate(curr);
         }
@@ -54,8 +54,6 @@ void AVLTree::insert(const string &newString) {
         curr = curr->parent;
     }
 }
-
-
 
 void AVLTree::printBalanceFactors(){
     printBalanceFactors(root); //call private helper from root
@@ -72,7 +70,7 @@ void AVLTree::printBalanceFactors(Node *curr){
     }
     else{
         // throw runtime_error("printing empty root");
-        return;
+        // return; // not sure what zybooks wants to be returned if called on empty tree
     }
 }
 
@@ -119,6 +117,29 @@ void AVLTree::rotateRight(Node *curr){
     setChild(curr, "left", leftRightChild);
 }
 
+void AVLTree::setChild(Node* parent, const string& location, Node* child) {
+    if (location != "left" && location != "right") { // if location parameter is invalid
+        throw runtime_error("invalid location");
+    }
+    if (location == "left") { // if location for child to be set is left then set parent's left to child
+        parent->left = child;
+    }
+    else { // else location set is right so set parent's right to child
+        parent->right = child;
+    }
+    if (child != nullptr) { // update child's parent
+        child->parent = parent;
+    }
+}
+
+void AVLTree::replaceChild(Node* parent, Node* unwantedChild, Node* desiredChild) {
+    if (parent->left == unwantedChild) { // if parent's left is the child to be replace
+        setChild(parent, "left", desiredChild);
+    }
+    else { // else parent's right is the child to be replaced
+        setChild(parent, "right", desiredChild);
+    }
+}
 
 void AVLTree::visualizeTree(const string &outputFilename){
     ofstream outFS(outputFilename.c_str());

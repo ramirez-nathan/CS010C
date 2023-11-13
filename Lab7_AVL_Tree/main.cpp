@@ -37,8 +37,10 @@ int main( ) {
 
       tree.insert(entry);
 
-    } else if (choice == 2) {
+    } 
+    else if (choice == 2) {
       tree.printBalanceFactors();
+      cout << endl;
 
     } 
     //fix buffer just in case non-numeric choice entered

@@ -6,14 +6,14 @@
 using namespace std;
 
 int AVLTree::height(Node* curr) {
-    if (curr == nullptr) {
+    if (curr == nullptr) { // base case if node is null then height is -1
         return -1;
     }
     return max(height(curr->left), height(curr->right)) + 1;
 }
 
 int AVLTree::balanceFactor(Node* curr) {
-    if (node == nullptr) { 
+    if (node == nullptr) { // if node is empty then bf is 0
         return 0; 
     }
     return height(curr->left) - height(curr->right);

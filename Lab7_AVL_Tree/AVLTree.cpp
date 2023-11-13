@@ -13,7 +13,7 @@ int AVLTree::height(Node* curr) {
 }
 
 int AVLTree::balanceFactor(Node* curr) {
-    if (node == nullptr) { // if node is empty then bf is 0
+    if (curr == nullptr) { // if node is empty then bf is 0
         return 0; 
     }
     return height(curr->left) - height(curr->right);

@@ -55,6 +55,71 @@ void AVLTree::insert(const string &newString) {
     }
 }
 
+
+
+void AVLTree::printBalanceFactors(){
+    printBalanceFactors(root); //call private helper from root
+}
+
+void AVLTree::printBalanceFactors(Node *curr){
+    if(curr != nullptr){
+        //recrusively travel left then print and travel right so its in order
+        printBalanceFactors(curr->left);
+        cout << curr->data 
+             << "(" << balanceFactor(curr) << ")"
+             << ", ";
+        printBalanceFactors(curr->right);
+    }
+    else{
+        // throw runtime_error("printing empty root");
+        return;
+    }
+}
+
+void AVLTree::rotate(Node* curr) {
+    if (balanceFactor(curr) == 2) { // if tree is unbalanced left
+        if (balanceFactor(curr->left) == -1) { // edge case double rotation needed
+            rotateLeft(curr->left);
+        }
+        rotateRight(curr);
+    }
+    else if (balanceFactor(curr) == -2) { // if tree is unbalanced right
+        if (balanceFactor(curr->right) == 1) { // edge case double rotation needed
+            rotateLeft(curr->right);
+        }
+        rotateLeft(curr);
+    }
+}
+
+void AVLTree::rotateLeft(Node* curr) {
+    Node* rightLeftChild = curr->right->left; 
+    if (curr->parent != nullptr) { // if not currently root, then replaceChild by swapping curr and curr's right
+        replaceChild(curr->parent, curr, curr->right);
+    }
+    else { // edge case for root
+        root = curr->left;
+        root->parent = nullptr;
+    }
+    // fixes up curr and curr's right
+    setChild(curr->right, "left", curr);
+    setChild(curr, "right", rightLeftChild);
+}
+
+void AVLTree::rotateRight(Node *curr){
+    Node* leftRightChild = curr->left->right;
+    if(curr->parent != nullptr){ // if not currently root, then replaceChild by swapping curr and curr's left
+        replaceChild(curr->parent, curr, curr->left);
+    }
+    else{ //edge case for root
+        root = curr->left;
+        root->parent = nullptr;
+    }
+    // fixes up curr and curr's left
+    setChild(curr->left, "right", curr);
+    setChild(curr, "left", leftRightChild);
+}
+
+
 void AVLTree::visualizeTree(const string &outputFilename){
     ofstream outFS(outputFilename.c_str());
     if(!outFS.is_open()){
@@ -83,26 +148,3 @@ void AVLTree::visualizeTree(ofstream & outFS, Node *n){
         }
     }
 }
-
-void AVLTree::printBalanceFactors(){
-    printBalanceFactors(root); //call private helper from root
-}
-
-void AVLTree::printBalanceFactors(Node *curr){
-    if(curr != nullptr){
-        //recrusively travel left then print and travel right so its in order
-        printBalanceFactors(curr->left);
-        cout << curr->data 
-             << "(" << balanceFactor(curr) << ")"
-             << ", ";
-        printBalanceFactors(curr->right);
-    }
-    else{
-        // throw runtime_error("printing empty root");
-        return;
-    }
-}
-
-
-
-

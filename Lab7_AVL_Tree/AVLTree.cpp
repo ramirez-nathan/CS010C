@@ -25,6 +25,7 @@ void AVLTree::insert(const string &newString) {
         return;
     }
     Node* curr = root;
+    
     while (true) {
         if (curr->data == newString) { // if duplicate, then return
             break; 
@@ -32,7 +33,7 @@ void AVLTree::insert(const string &newString) {
         if (newString < curr->data) { // go left
             if (curr->left == nullptr) { // if left child is empty, insert
                 curr->left = new Node(newString);
-                curr->parent = curr;
+                curr->left->parent = curr;
                 break;
             }
             curr = curr->left;
@@ -40,15 +41,15 @@ void AVLTree::insert(const string &newString) {
         else { // go right
             if (curr->right == nullptr) { // if right child is empty, insert
               curr->right = new Node(newString);
-              curr->parent = curr;
+              curr->right->parent = curr;
               break;
             }
             curr = curr->right;
         }
     }
-    while (curr != nullptr) { // iterate up the tree from insert location and look for imbalances in the tree
+    while (curr) { // iterate up the tree from insert location and look for imbalances in the tree
         if (balanceFactor(curr) > 1 || balanceFactor(curr) < -1) {
-            rotate(curr);
+          rotate(curr);
         }
         // move up tree
         curr = curr->parent;
@@ -59,7 +60,7 @@ void AVLTree::printBalanceFactors(){
     printBalanceFactors(root); //call private helper from root
 }
 
-void AVLTree::printBalanceFactors(Node *curr){
+void AVLTree::printBalanceFactors(Node* curr) {
     if(curr != nullptr){
         //recrusively travel left then print and travel right so its in order
         printBalanceFactors(curr->left);
@@ -68,9 +69,9 @@ void AVLTree::printBalanceFactors(Node *curr){
              << ", ";
         printBalanceFactors(curr->right);
     }
-    else{
+    else {
         // throw runtime_error("printing empty root");
-        // return; // not sure what zybooks wants to be returned if called on empty tree
+        return; 
     }
 }
 
@@ -83,7 +84,7 @@ void AVLTree::rotate(Node* curr) {
     }
     else if (balanceFactor(curr) == -2) { // if tree is unbalanced right
         if (balanceFactor(curr->right) == 1) { // edge case double rotation needed
-            rotateLeft(curr->right);
+            rotateRight(curr->right);
         }
         rotateLeft(curr);
     }
@@ -95,7 +96,7 @@ void AVLTree::rotateLeft(Node* curr) {
         replaceChild(curr->parent, curr, curr->right);
     }
     else { // edge case for root
-        root = curr->left;
+        root = curr->right;
         root->parent = nullptr;
     }
     // fixes up curr and curr's right
@@ -141,7 +142,7 @@ void AVLTree::replaceChild(Node* parent, Node* unwantedChild, Node* desiredChild
     }
 }
 
-void AVLTree::visualizeTree(const string &outputFilename){
+/* void AVLTree::visualizeTree(const string &outputFilename){
     ofstream outFS(outputFilename.c_str());
     if(!outFS.is_open()){
         cout << "Error" << endl;
@@ -154,9 +155,9 @@ void AVLTree::visualizeTree(const string &outputFilename){
     string jpgFilename = outputFilename.substr(0,outputFilename.size()-4)+".jpg";
     string command = "dot -Tjpg " + outputFilename + " -o " + jpgFilename;
     system(command.c_str());
-}
+} */
 
-void AVLTree::visualizeTree(ofstream & outFS, Node *n){
+/* void AVLTree::visualizeTree(ofstream & outFS, Node *n){
     if(n){
         if(n->left){
             visualizeTree(outFS,n->left);
@@ -168,4 +169,4 @@ void AVLTree::visualizeTree(ofstream & outFS, Node *n){
             outFS<< n->data << " -> " << n->right->data<< ";" <<endl;    
         }
     }
-}
+} */

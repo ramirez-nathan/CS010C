@@ -8,18 +8,18 @@ using namespace std;
 
 void arithmeticExpression::buildTree() {
     string postfixString = infix_to_postfix(); // convert infix to postfix
-    stack<TreeNode*> s;
+    stack<Node*> s;
     for (const auto& c:postfixString) { // iterate for each char in the string
         if (isalpha(c)) { // if current char is an alphabet push it on the stack
-            s.push(new TreeNode(c, 0));
+            s.push(new Node(c, 0));
         }
         else {
-            TreeNode* expr = new TreeNode(c, 0);
+            Node* expr = new Node(c, 0);
             
             // create a temporary node to store expression node's right for the top thing in the stack
-            TreeNode* right = s.top();
+            Node* right = s.top();
             s.pop(); // pop to be able to get second highest thing on the stack
-            TreeNode* left = s.top();
+            Node* left = s.top();
             s.pop();
             // set expr's right and left to their nodes and push onto the stack as one
             expr->right = right;
@@ -34,7 +34,7 @@ void arithmeticExpression::infix(){
     infix(root); // calling private recursive helper
 }
 
-void arithmeticExpression::infix(TreeNode *root){
+void arithmeticExpression::infix(Node *root){
     if(root != nullptr){
         if(root->left != nullptr){ // if curr is first thing that needs to be printed then parenthesis
             cout << "(";
@@ -52,7 +52,7 @@ void arithmeticExpression::postfix() {
     postfix(root); // calls recursive helper function
 }
 
-void arithmeticExpression::postfix(TreeNode* root) {
+void arithmeticExpression::postfix(Node* root) {
     if (root != nullptr) { // edge case if tree is empty
         // prints after traversing to the right, left then curr of each subtree
         postfix(root->left);
@@ -65,7 +65,7 @@ void arithmeticExpression::prefix(){
     prefix(root); // calling private recursive helper
 }
 
-void arithmeticExpression::prefix(TreeNode *root){
+void arithmeticExpression::prefix(Node *root){
     if(root != nullptr){ // edge case to make sure not printing empty trees
     // prints the very left first then goes to the right of each left subtree after
         cout << root->data;

@@ -28,7 +28,7 @@ void AVLTree::insert(const string &newString) {
     
     while (true) {
         if (curr->data == newString) { // if duplicate, then return
-            break; 
+            return; 
         }
         if (newString < curr->data) { // go left
             if (curr->left == nullptr) { // if left child is empty, insert

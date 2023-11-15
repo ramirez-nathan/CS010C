@@ -22,7 +22,7 @@ unsigned min_index(const vector<T> &vals, unsigned index) { // passes in an inde
 template<typename T>
 void selection_sort(vector <T> &vals) { // passes in a vector of type T and sorts them based on the selection sort method
     unsigned int smallestIndex = 0;
-    T garbage;
+    T placeholder;
     //iterate until end of the vector
     for (unsigned int i = 0; i < vals.size(); ++i) {
         // find the smallest value
@@ -30,9 +30,9 @@ void selection_sort(vector <T> &vals) { // passes in a vector of type T and sort
         // if smallestIndex is smaller than the current value in the index of i
         if (vals.at(smallestIndex) < vals.at(i)) {
             //swap smallest value with i
-            garbage = vals.at(i);
+            placeholder = vals.at(i);
             vals.at(i) = vals.at(smallestIndex);
-            vals.at(smallestIndex) = garbage;
+            vals.at(smallestIndex) = placeholder;
         }
 
     }

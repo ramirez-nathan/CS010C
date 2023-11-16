@@ -7,18 +7,18 @@
 #include <ostream>
 
 using namespace std;
-struct Node{
+struct TreeNode{
     char data;
     char key;
-    Node* left;
-    Node* right;
-    Node(char data, char key):data(data),key(key),left(0),right(0){}
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(char data, char key):data(data),key(key),left(0),right(0){}
 };
 
 class arithmeticExpression{
   private:
     string infixExpression;
-    Node* root;
+    TreeNode* root;
 
   public:
     /* Initializes an empty tree and sets the infixExpression
@@ -62,15 +62,15 @@ class arithmeticExpression{
        by performing the inorder traversal of the tree.
        An opening and closing parenthesis must be added at the 
        beginning and ending of each expression. */
-    void infix(Node *);
+    void infix(TreeNode *);
 
     /* Helper function that outputs the prefix notation of the arithmetic expression tree
        by performing the preorder traversal of the tree. */
-    void prefix(Node *);
+    void prefix(TreeNode *);
 
     /* Helper function that outputs the postfix notation of the arithmetic expression tree
        by performing the postorder traversal of the tree. */
-    void postfix(Node *);
+    void postfix(TreeNode *);
 
     /* Helper function for generating the dotty file. This is a recursive function. */
     // void visualizeTree(ofstream &, TreeNode *);

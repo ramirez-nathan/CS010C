@@ -16,12 +16,16 @@ class HashTable {
 
  public:
 	HashTable(int);
+	~HashTable();
 	bool contains(const string &);
 	double getAverage(const string &);
 	void put(const string &, int);
  
  private:
 	int computeHash(const string &);
+
+	HashTable(const HashTable &copy); // copy constructor
+	HashTable & operator=(const HashTable &copy); // copy asssingment 
 };
 
 #endif

@@ -154,47 +154,6 @@ void Tree::insert(const string &key, Node* curr) {
     }
 }
 
-
-
-/* 
-Lets split the node:
-First, lets make a leftChild node and rightChild node and set them to nullptr
-Also, make an empty string called middleKey
-Edge cases:
-- if node isnt full or its empty (if curr->large == ""), then return. 
-- if node is a duplicate, throw error.
-Now it needs to be split:
-*Lets set the left, middle, and right to prepare for split*
-1) if key is smaller than both both keys in curr  (i.e. key < curr->small)
-    i) set leftChild equal to new Node(key)
-    ii) set middleKey equal to curr->small 
-    iii) set rightChild equal to new Node(curr->large) 
-2) else if key is larger than both keys in curr (i.e. key > curr->large)
-    i) set leftChild equal to new Node(curr->small)
-    ii) set middleKey equal to curr->large
-    iii) set rightChild equal to new Node(key)
-3) else the key is between curr's keys 
-    i) set leftChild equal to new Node(curr)
-    ii) set middleKey equal to key
-    iii) set rightChild equal to new Node(curr->large)
-Now that we have those things set and stored, lets make curr a node with 
-a single key and set all the nodes into their right place:
-Make curr->large an empty string (curr->large = "")
-decrement curr->keyCount (*keyCount is a count of the keys in a node)
-1) if curr has a parent node
-    - set curr's parent's large to middleKey
-    - increment parent's keyCount
-    - set curr's parent's middle to leftChild
-    - set leftChild's parent to curr's parent
-    - set curr's parent's right to rightChild
-    - set rightChild's parent to curr's parent
-2) else it is root
-    - set curr's small to middleKey
-    - set curr's left to leftChild 
-    - set curr's right to rightChild
-    - set leftChild's parent to curr
-    - set rightChild's parent to curr
-*/
 void Tree::TreeSplit(Node* curr, const string &key) {
     Node *leftChild = nullptr;
     Node *rightChild = nullptr;

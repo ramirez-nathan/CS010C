@@ -30,7 +30,7 @@ HashTable::~HashTable() {
 int HashTable::computeHash(const string &s) {
 	int sum = 0;
     // add ascii values of each char
-    for(unsigned int i = 0; i < s.size(); ++i){
+    for(unsigned int i = 0; i < s.size(); ++i){ // iterate through the string and increment sum
         sum += s.at(i); 
     }
     return sum % size;
@@ -73,7 +73,7 @@ double HashTable::getAverage(const string &s) {
 	if (contains(s)) { // if word exists in table
 		list<WordEntry>::iterator it; // stl iterator 
 		for (it = hashTable[computeHash(s)].begin(); it != hashTable[computeHash(s)].end(); ++it) { // traverse through the list using iterator to check each value
-			if (it->getWord() == s) { // if it already exists
+			if (it->getWord() == s) { // check if word is found
 				return it->getAverage();
 			}
 		}
@@ -87,8 +87,8 @@ double HashTable::getAverage(const string &s) {
 *         false if word is not in the hash table
 */
 bool HashTable::contains(const string &s) {
-    for(list<WordEntry>::iterator it = hashTable[computeHash(s)].begin(); it != hashTable[computeHash(s)].end(); ++it) {
-        if(it->getWord() == s) {
+    for(list<WordEntry>::iterator it = hashTable[computeHash(s)].begin(); it != hashTable[computeHash(s)].end(); ++it) { // traverse through the list using iterator to check each value
+        if(it->getWord() == s) { // if it exists
             return true;
         }
     }

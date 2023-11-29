@@ -24,8 +24,8 @@ class HashTable {
  private:
 	int computeHash(const string &);
 
-	HashTable(const HashTable &copy); // copy constructor
-	HashTable & operator=(const HashTable &copy); // copy asssingment 
+	HashTable(const HashTable &copy) = delete; // copy constructor
+	HashTable & operator=(const HashTable &copy) = delete; // copy asssingment 
 };
 
 #endif

@@ -108,9 +108,10 @@ void Tree::insert(const string &key, Node* curr) {
     }
 
     if(key < curr->small){ // edge case for when key is smaller than both keys
-        if(curr->keyCount == 1){
-            if(curr->left == nullptr){
-                curr->large = curr->small;
+        // check how many are in curr
+        if(curr->keyCount == 1){ // if curr has room 
+            if(curr->left == nullptr) { // if at leaf then insert as small key in curr
+                curr->large = curr->small; // shift curr's small over to the large spot to prepare for insertion of key
                 curr->small = key;
                 ++curr->keyCount; 
             }
@@ -118,38 +119,39 @@ void Tree::insert(const string &key, Node* curr) {
                 insert(key, curr->left);
             }
         }
-        else if(curr->keyCount == 2){
-            if(curr->left != nullptr){
+        else if(curr->keyCount == 2) { // if curr is full 
+            if(curr->left != nullptr){ // if leftChild isnt empty then recursively call insert on curr->left
                 insert(key,curr->left);
             }
-            else{
+            else{ // we are at leaf so split curr
                 TreeSplit(curr, key);
             }
         }
-        else{
-            TreeSplit(curr, key);
+        else { // else lost so split
+            TreeSplit(curr, key); 
         }
     }
     else if(key > curr->small){ // when key either in between or bigger than curr
-        if(curr->keyCount == 1){ //check how many are in curr
-            if(curr->right == nullptr){  //if at leaf then insert as large key in curr
+        //check how many are in curr
+        if(curr->keyCount == 1){ 
+            if(curr->right == nullptr){ // if at leaf then insert as large key in curr
                 curr->large = key;
                 ++curr->keyCount;
             }
             else{
-                insert(key,curr->right); //else branch to the right
+                insert(key,curr->right); // else branch to the right
             }
         }
-        else if(curr->keyCount == 2 && key < curr->large){ // when key is bigger than both in curr
+        else if(curr->keyCount == 2 && key < curr->large){ // when key is in between both in curr
             if(curr->middle != nullptr){ // recursively call insert to insert in the middle
                 insert(key, curr->middle);
             }
             else{ // else lost so split
                 TreeSplit(curr, key);
             }
-        }
-        else{
-            TreeSplit(curr, key);
+        } 
+        else{ // when key is bigger than both in curr 
+            TreeSplit(curr, key); 
         }
     }
 }
